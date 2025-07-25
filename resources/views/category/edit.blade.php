@@ -6,9 +6,12 @@
 
 @section('content')
 <div class="container">
+
     {{-- 🔙 Back to Category List --}}
     <div class="mb-4 text-end">
-        <a href="{{ route('category.index') }}" class="btn btn-outline-secondary rounded-3">📂 Back to Categories</a>
+        <a href="{{ route('category.index') }}" class="btn btn-outline-secondary fw-semibold rounded-3">
+            📂 Back to Categories
+        </a>
     </div>
 
     {{-- ✅ Success Message --}}
@@ -32,9 +35,17 @@
                     <label class="form-label fw-bold">Category Name</label>
                     <input type="text" name="name" value="{{ old('name', $category->name) }}" class="form-control form-control-lg rounded-3" required>
                 </div>
-                <button class="btn btn-warning text-white fw-bold rounded-3">💾 Update Category</button>
+                <button class="btn btn-warning text-white fw-bold rounded-3" type="submit">
+                    💾 Update Category
+                </button>
             </form>
         </div>
     </div>
 </div>
+
+<!-- ✅ Ensure Bootstrap 5 CSS is loaded -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- ✅ Bootstrap 5 JS (for dismissible alerts) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endsection

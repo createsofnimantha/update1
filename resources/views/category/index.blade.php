@@ -7,7 +7,7 @@
 @section('content')
 <div class="container mb-5">
 
-  {{-- 🔙 Back to Book Add Button --}}
+  {{-- 🔙 Back to Book View Button --}}
   <div class="mb-4 text-end">
     <a href="{{ route('books.index') }}" class="btn btn-outline-primary fw-semibold rounded-3">
       📖 Back to Book View
@@ -30,13 +30,9 @@
     <div class="card-body bg-light">
       <form method="POST" action="{{ route('category.store') }}">
         @csrf
-        <div class="row g-2">
-          <div class="col-md-9">
-            <input type="text" name="name" class="form-control form-control-lg rounded-3" placeholder="Enter category name..." required>
-          </div>
-          <div class="col-md-3">
-            <button class="btn btn-success btn-lg w-100 rounded-3">Add Category</button>
-          </div>
+        <div class="input-group input-group-lg">
+          <input type="text" name="name" class="form-control rounded-start-3" placeholder="Enter category name..." required>
+          <button class="btn btn-success rounded-end-3" type="submit">Add Category</button>
         </div>
       </form>
     </div>
@@ -47,29 +43,32 @@
     <div class="card border-0 shadow-sm rounded-4 mb-4">
       <div class="card-header bg-success text-white d-flex justify-content-between align-items-center rounded-top-4">
         <span class="fs-5 fw-semibold">📁 {{ $category->name }}</span>
-        <div class="d-flex gap-2">
-          <!-- ✏️ Edit Button -->
-          <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-light text-primary fw-bold px-3 py-1 rounded-pill">
-            ✏️ Edit
+        <div class="btn-group" role="group">
+          <a href="{{ route('category.edit', $category->id) }}"
+             class="btn btn-sm fw-bold text-white"
+             style="background-color: #f0ad4e;" title="Edit">
+             ✏️ Edit
           </a>
-          <!-- 🗑 Delete Button -->
           <form action="{{ route('category.destroy', $category) }}" method="POST" onsubmit="return confirm('Delete this category and its subcategories?')">
             @csrf @method('DELETE')
-            <button class="btn btn-sm btn-light text-danger fw-bold px-3 py-1 rounded-pill">🗑 Delete</button>
+            <button class="btn btn-sm fw-bold text-white" style="background-color: #d9534f;" title="Delete">
+              🗑 Delete
+            </button>
           </form>
         </div>
       </div>
+
       <div class="card-body bg-white">
         <!-- 📑 Subcategories -->
         <h6 class="fw-bold text-secondary mb-3">📑 Subcategories</h6>
         @if($category->subcategories->count())
-          <ul class="list-group list-group-flush mb-3">
+          <ul class="list-group mb-3">
             @foreach ($category->subcategories as $sub)
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span>📌 {{ $sub->name }}</span>
+                📌 {{ $sub->name }}
                 <form action="{{ route('subcategory.destroy', $sub) }}" method="POST" onsubmit="return confirm('Delete this subcategory?')">
                   @csrf @method('DELETE')
-                  <button class="btn btn-sm btn-outline-danger rounded-pill">❌</button>
+                  <button class="btn btn-sm btn-outline-danger rounded-pill" title="Delete Subcategory">❌</button>
                 </form>
               </li>
             @endforeach
@@ -81,13 +80,9 @@
         <!-- ➕ Add Subcategory -->
         <form method="POST" action="{{ route('subcategory.store', $category->id) }}">
           @csrf
-          <div class="row g-2">
-            <div class="col-md-9">
-              <input type="text" name="name" class="form-control form-control-sm rounded-3" placeholder="Enter subcategory name..." required>
-            </div>
-            <div class="col-md-3">
-              <button class="btn btn-outline-secondary btn-sm w-100 rounded-3">➕ Add Subcategory</button>
-            </div>
+          <div class="input-group input-group-sm">
+            <input type="text" name="name" class="form-control rounded-start-3" placeholder="Enter subcategory name..." required>
+            <button class="btn btn-outline-secondary rounded-end-3" type="submit">➕ Add</button>
           </div>
         </form>
       </div>
@@ -99,6 +94,9 @@
   @endforelse
 </div>
 
-<!-- Bootstrap 5 JS (for dismissible alerts) -->
+<!-- ✅ Load Bootstrap 5 CSS (IMPORTANT) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- ✅ Bootstrap 5 JS (for dismissible alerts) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
